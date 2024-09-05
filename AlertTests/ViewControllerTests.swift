@@ -42,4 +42,11 @@ final class ViewControllerTests: XCTestCase {
         
         try alertVerifier.executeAction(forButton: "OK")
     }
+    
+    @MainActor
+    func test_executeAlertAction_withCancelButton() throws {
+        tap(sut.button)
+        
+        try alertVerifier.executeAction(forButton: "Cancel")
+    }
 }
