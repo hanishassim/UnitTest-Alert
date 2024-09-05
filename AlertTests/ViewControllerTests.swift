@@ -4,25 +4,26 @@ import ViewControllerPresentationSpy
 
 final class ViewControllerTests: XCTestCase {
     private var alertVerifier: AlertVerifier!
+    private var sut: ViewController!
     
     @MainActor
     override func setUp() {
         super.setUp()
         alertVerifier = AlertVerifier()
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        sut = storyboard.instantiateViewController(identifier: String(describing: ViewController.self))
+        sut.loadViewIfNeeded()
     }
     
     @MainActor
     override func tearDown() {
         alertVerifier = nil
+        sut = nil
         super.tearDown()
     }
     
     @MainActor
     func test_tappingButton_shouldShowAlert() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let sut: ViewController = storyboard.instantiateViewController(identifier: String(describing: ViewController.self))
-        sut.loadViewIfNeeded()
-        
         tap(sut.button)
         
         alertVerifier.verify(title: "Do the Thing?",
